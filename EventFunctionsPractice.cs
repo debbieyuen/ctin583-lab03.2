@@ -4,21 +4,10 @@ using UnityEngine;
 
 public class EventFunctionsPractice : MonoBehaviour
 {
-    [SerializeField] private GameObject player;
-
-    void SpawnObject()
-    {
-        float x = Random.Range(-2.0f, 2.0f);
-        float z = Random.Range(-2.0f, 2.0f);
-        Instantiate(player, new Vector3(x, 2, z), Quaternion.identity);
-    }
-
     // Start is called before the first frame update
     void Start()
     {
         Debug.Log("Start called.");
-        InvokeRepeating("SpawnObject", 2, 1/2);
-        CancelInvoke("SpawnObject");
     }
 
     private void Awake()
@@ -29,6 +18,11 @@ public class EventFunctionsPractice : MonoBehaviour
     private void OnEnable()
     {
         Debug.Log("OnEnable called.");
+    }
+
+        private void OnDisable)
+    {
+        Debug.Log("OnDisable called.");
     }
 
     // Called every physics step. Intervals are consistent
