@@ -1,42 +1,42 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
     [SerializeField] private MeshRenderer meshRenderer;
-    [SerializeField] private ParticleSystem gemParticles;
+    [SerializeField] private ParticleSystem enemyParticles;
 
-    
-
-    // Set the materials in the inspector
-    public Material[] myMaterials;
+    [SerializeField] Material[] myMaterials;
 
 
     private void OnCollisionEnter(Collision collision)
     {
 
+
         switch (collision.gameObject.tag)
         {
-            case "Gem":
-                Debug.Log("You won a gem!");
-                Destroy(collision.gameObject);
-                WinGem();
-                break;
             case "Enemy":
-                Debug.Log("You hit an opponent");
+                Destroy(gameObject);
                 break;
+
+            case "Gem":
+                meshRenderer.material = collision.gameObject.GetComponent<Renderer>().material;
+                Destroy(collision.gameObject);
+                PlayParticles();
+                break;
+
             default:
                 break;
         }
     }
 
-    private void Start()
+    // Start is called before the first frame update
+    void Start()
     {
-        //gameObject.GetComponent<Renderer>().material =
-        //myMaterials[Random.Range(0, myMaterials.Length)];
-        StartCoroutine(loopDelay());
+        //meshRenderer.material = myMaterials[Random.Range(0, myMaterials.Length)];
+
+        //StartCoroutine(loopDelay());
     }
 
     IEnumerator loopDelay()
@@ -49,9 +49,8 @@ public class CollisionHandler : MonoBehaviour
         StartCoroutine(loopDelay());
     }
 
-    private void WinGem()
+    private void PlayParticles()
     {
-        gemParticles.Play();
+        enemyParticles.Play();
     }
 }
-
